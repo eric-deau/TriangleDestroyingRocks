@@ -77,8 +77,6 @@ function setUp() {
 				currentLasers++;
 				blasterArr.push(laser);
 			}
-			console.log(currentLasers);
-			console.log(laserLimit);
 			ctx.clearRect(0, 0, width, height);
 			spaceShip.draw();
 			ctx.font = ("40px Georgia");
@@ -115,7 +113,6 @@ function moveStuff() {
 			for (let b = 0; b < blasterArr.length; b++) {
 				const asteroid = asteroidArray[i];
 				const blaster = blasterArr[b];
-
 				if (
 					asteroid.x < blaster.x + blaster.w &&
 					asteroid.x + asteroid.w > blaster.x &&
@@ -126,7 +123,6 @@ function moveStuff() {
 					asteroidArray.splice(i, 1);
 					blasterArr.splice(b, 1);
 					currentLasers--;
-					highScore++;
 					currentScore++;
 					i--; // decrement i to account for the removed asteroid
 					break; // exit the inner loop since a collision has occurred
@@ -148,6 +144,8 @@ function moveStuff() {
 			console.log("Hit");
 			lose();
 			break;
+		} else {
+			console.log("No hit");
 		}
 	}
 	//redraw score
