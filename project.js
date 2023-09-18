@@ -19,7 +19,7 @@ let blasterArr = new Array();
 asteroidArray = new Array()
 
 function setUp() {
-	spaceShip = new Ship(500, 750);
+	spaceShip = new Ship(500, 700);
 	spaceShip.draw();
 	let Timer = setInterval(moveStuff, 10);
 	ctx.font = ("30px Georgia");
@@ -339,7 +339,7 @@ function resetGame() {
 	blasterArr = [];
 	starArr = [];
 	startGame = false;
-	spaceShip = new Ship(500, 750);
+	spaceShip = new Ship(500, 700);
 
 	for (i = 0; i <= 100; i++) {
 		let star = new Star(Math.floor(Math.random() * width), Math.floor(Math.random() * height), Math.floor(Math.random() * 5));
