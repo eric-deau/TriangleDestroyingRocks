@@ -110,20 +110,28 @@ function moveStuff() {
 	ctx.clearRect(0, 0, width, height);
 	spaceShip.draw();
 	for (let i = 0; i < asteroidArray.length; i++) {
+		for (let i = 0; i < asteroidArray.length; i++) {
+			for (let b = 0; b < blasterArr.length; b++) {
+				const asteroid = asteroidArray[i];
+				const blaster = blasterArr[b];
 
-		for (let b = 0; b < blasterArr.length; b++) {
-			if (asteroidArray[i].x < (blasterArr[b].x + asteroidArray[i].w) && asteroidArray[i].x > (blasterArr[b].x - asteroidArray[i].w) && asteroidArray[i].y < (blasterArr[b].y + blasterArr[b].h) && asteroidArray[i].y > (blasterArr[b].y - asteroidArray[i].y)) {
-				console.log("Hit");
-				asteroidArray.splice(i, 1);
-				blasterArr.splice(b, 1);
-				currentLasers--;
-				highScore++;
-				currentScore++;
+				if (
+					asteroid.x < blaster.x + blaster.w &&
+					asteroid.x + asteroid.w > blaster.x &&
+					asteroid.y < blaster.y + blaster.h &&
+					asteroid.y + asteroid.h > blaster.y
+				) {
+					console.log("Hit");
+					asteroidArray.splice(i, 1);
+					blasterArr.splice(b, 1);
+					currentLasers--;
+					highScore++;
+					currentScore++;
+					i--; // decrement i to account for the removed asteroid
+					break; // exit the inner loop since a collision has occurred
+				}
 			}
-
 		}
-		//s1 == asteroid s2 == Blaster
-		//asteroid.y + asteroid.x , asteroid.x + asteroid.w, asteroid.y+ asteroid.h
 	}
 	//redraw score
 	ctx.font = ("40px Georgia");
