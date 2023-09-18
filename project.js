@@ -18,10 +18,6 @@ let starArr = new Array();
 let blasterArr = new Array();
 asteroidArray = new Array()
 
-function collision(Blaster) {
-
-}
-
 function setUp() {
 	spaceShip = new Ship(500, 750);
 	spaceShip.draw();
@@ -44,6 +40,7 @@ function setUp() {
 	addEventListener("keyup", function (e) {
 		keyState[e.keyCode] = false;
 	}, true)
+
 	function moveLoop() {
 		//left
 		if (keyState[37]) {
@@ -80,6 +77,8 @@ function setUp() {
 				currentLasers++;
 				blasterArr.push(laser);
 			}
+			console.log(currentLasers);
+			console.log(laserLimit);
 			ctx.clearRect(0, 0, width, height);
 			spaceShip.draw();
 			ctx.font = ("40px Georgia");
@@ -109,6 +108,8 @@ function setUp() {
 function moveStuff() {
 	ctx.clearRect(0, 0, width, height);
 	spaceShip.draw();
+
+	// blaster collision detection
 	for (let i = 0; i < asteroidArray.length; i++) {
 		for (let i = 0; i < asteroidArray.length; i++) {
 			for (let b = 0; b < blasterArr.length; b++) {
@@ -131,6 +132,22 @@ function moveStuff() {
 					break; // exit the inner loop since a collision has occurred
 				}
 			}
+		}
+	}
+
+	//ship collision detection
+	for (let i = 0; i < asteroidArray.length; i++) {
+		const asteroid = asteroidArray[i];
+
+		if (
+			asteroid.x < spaceShip.x + 15 &&
+			asteroid.x + asteroid.w > spaceShip.x &&
+			asteroid.y < spaceShip.y + 25 &&
+			asteroid.y + asteroid.h > spaceShip.y
+		) {
+			console.log("Hit");
+			lose();
+			break;
 		}
 	}
 	//redraw score
@@ -278,7 +295,7 @@ function drawAsteroid() {
 	let a = new asteroid(randX, 15);
 	a.draw()
 	asteroidArray.push(a);
-	console.log(asteroidArray)
+	// console.log(asteroidArray)
 }
 
 function asteroid(x, y) {
@@ -301,87 +318,34 @@ function asteroid(x, y) {
 	}
 }
 
-function collision(Blaster) {
-
-	for (let i = 0; i < asteroidArray.length; i++) {
-		let a = asteroidArray[i];
-
-
-		if (Blaster.x + Blaster.w >= a.x && Blaster.x <= a.x + a.w && Blaster.y >= a.y && Blaster.y <= a.y + a.h) {
-			console.log("Hit")
-			asteroidArray.splice(i, 1)
-		}
-	}
-}
-
 function lose() {
-	ctx.clearRect(0, 0, width, height);
-	for (let g = 0; g < asteroidArray.length; g++) {
-		asteroidArray[g].draw();
+	if (currentScore > highScore) {
+		highScore = currentScore;
 	}
-	for (i = 0; i < starArr.length; i++) {
-		starArr[i].y -= 1;
-		starArr[i].draw();
-		spaceShip.draw();
-		if (starArr[i].y < -5) {
-			starArr[i].y = height + 5;
-		}
-	}
-	clearInterval(survivalTimer);
-	clearInterval(moveStuff);
-	currentScore = 0;
-	survivalTime = 0;
-	asteroidSpeed = 0.1;
+	alert("You lost! Your score was: " + currentScore);
+	resetGame();
 }
-
-//s1.x < s2.x < s1.x + s1.w T1
-//s2.x + s2.w T2
-//same for y, switch X with Y and W with H T3,T4
-
-//asteroid.x < Blaster.x < asteroid.x + asteroid.w
-//Blaster.x + Blaster.w
-
-//asteroid.y < Blaster.y < asteroid.y+asteroid.h
-//Blaster.y + Blaster.w
-
-
-
-//T1									//T2
-// if(asteroid.x < Blaster.x < asteroid.x + asteroid.w || Blaster.x + Blaster.w)
-
-//T3									//T4
-//if (asteroid.y < Blaster.y < asteroid.y+asteroid.h || Blaster.y + Blaster.w)
-
-//if (T1 || T2) && (T3 || T4) 
 
 
 function resetGame() {
 	ctx.clearRect(0, 0, 400, 400);
-	ctx.save();
-	ctx.translate(width / 2, height / 2);
-	ctx.rotate(-30 * Math.PI / 180);
-	ctx.beginPath();
-	ctx.moveTo(0, 0);
-	ctx.lineTo(0, 50);
-	ctx.rotate(60 * Math.PI / 180);
-	ctx.lineTo(0, 50);
-	ctx.lineTo(0, 0);
-	ctx.stroke();
+	clearInterval(asteroidTick);
+	clearInterval(survivalTimer);
+	clearInterval(moveStuff);
+	currentScore = 0;
+	survivalTime = 0;
+	currentLasers = 0;
+	asteroidArray = [];
+	blasterArr = [];
+	starArr = [];
+	startGame = false;
+	spaceShip = new Ship(500, 750);
 
-	ctx.fillStyle = "red"; //nose
-	ctx.beginPath();
-	ctx.rotate(-60 * Math.PI / 180);
-	ctx.moveTo(0, 0);
-	ctx.lineTo(0, 10);
-	ctx.rotate(60 * Math.PI / 180);
-	ctx.lineTo(0, 10);
-	ctx.lineTo(0, 0);
-	ctx.fill();
+	for (i = 0; i <= 100; i++) {
+		let star = new Star(Math.floor(Math.random() * width), Math.floor(Math.random() * height), Math.floor(Math.random() * 5));
+		starArr.push(star);
+		star.draw();
+	}
 
-	ctx.fillStyle = "blue"; //eye
-	ctx.beginPath();
-	ctx.arc(15, 25, 5, 0, 2 * Math.PI);
-	ctx.fill();
-	ctx.restore();
 }
 
