@@ -191,7 +191,7 @@ function Blaster(x, y) {
 	this.h = 10;
 
 	this.draw = function () {
-		ctx.fillStyle = "yellow";
+		ctx.fillStyle = "green";
 		ctx.save();
 		ctx.translate(this.x, this.y);
 		ctx.beginPath();
