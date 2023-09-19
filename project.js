@@ -12,7 +12,6 @@ let survivalTime = 0;
 let survivalTimer;
 var startGame = false;
 let asteroidSpawn = false;
-var moveLoop;
 var keyState = {};
 
 let starArr = new Array();
@@ -348,9 +347,10 @@ function resetGame() {
 	asteroidArray = [];
 	blasterArr = [];
 	starArr = [];
+	keyState = {};
 	startGame = false;
 	spaceShip = new Ship(500, 700);
-	clearTimeout(moveLoop);
+	// clearTimeout(moveLoop);
 
 
 	for (i = 0; i <= 100; i++) {
