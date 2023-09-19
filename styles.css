@@ -13,7 +13,6 @@ button {
     margin-left: auto;
     margin-right: auto;
     display: inline-block;
-    background-color: #4CAF50;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -22,6 +21,74 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
+
+#start {
+    background-color: #4CAF50;
+    transition: all 0.3s;
+    position: relative;
+    opacity: 1;
+    transform: scale(1, 1);
+}
+
+#start span {
+    transition: all 0.3s;
+}
+
+#start:hover span {
+    transform: scale(0.1, 1);
+    letter-spacing: 2px;
+}
+
+#start:hover::before {
+    opacity: 1;
+    transform: scale(1, 1);
+}
+
+#start::after {
+    content: "";
+    position: absolute;
+    background-color: #4CAF50;
+    z-index: 1;
+    transition: all(0.3s);
+}
+
+#start:hover::after {
+    opacity: 0;
+    transform: scale(0.1, 1);
+}
+
+#start:active {
+    background-color: #3e8e41;
+    transform: translateY(4px);
+}
+
+#restart {
+    background-color: #4CAF50;
+    transition: all 0.3s;
+    position: relative;
+    opacity: 1;
+    transform: all .35s;
+}
+
+#restart span {
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s;
+}
+
+#restart:hover {
+    background-color: #f44336;
+    transform: scale(1.1, 1.1);
+    transform: translate(2px, 2px);
+    color: white;
+    box-shadow: 0 0 10px #f44336;
+}
+
+#restart:active {
+    background-color: #f44336;
+    transform: translateY(4px);
+}
+
 
 .container {
     text-align: center;
