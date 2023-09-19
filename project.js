@@ -21,7 +21,7 @@ asteroidArray = new Array()
 function setUp() {
 	spaceShip = new Ship(500, 700);
 	spaceShip.draw();
-	let Timer = setInterval(moveStuff, 10);
+	setInterval(moveStuff, 10);
 	ctx.font = ("30px Georgia");
 	ctx.fillStyle = ("yellow");
 	ctx.fillText("High Score: " + highScore, 10, 40);
@@ -78,7 +78,7 @@ function setUp() {
 	})
 }
 
-
+// ship movement
 function moveLoop() {
 	if (startGame == true) {
 		//left
@@ -104,13 +104,12 @@ function moveLoop() {
 			spaceShip.y += 3;
 			if (spaceShip.y > height - 25)
 				spaceShip.y = height - 25;
-			console.log('test');
 		}
 	}
 		setTimeout(moveLoop, 10);
-	}
+}
 
-
+// draw loop
 function moveStuff() {
 	ctx.clearRect(0, 0, width, height);
 	spaceShip.draw();
@@ -127,7 +126,6 @@ function moveStuff() {
 					asteroid.y < blaster.y + blaster.h &&
 					asteroid.y + asteroid.h > blaster.y
 				) {
-					console.log("Hit");
 					asteroidArray.splice(i, 1);
 					blasterArr.splice(b, 1);
 					currentLasers--;
@@ -149,11 +147,8 @@ function moveStuff() {
 			asteroid.y < spaceShip.y + 25 &&
 			asteroid.y + asteroid.h > spaceShip.y
 		) {
-			console.log("Hit");
 			lose();
 			break;
-		} else {
-			console.log("No hit");
 		}
 	}
 	//redraw score
@@ -200,6 +195,7 @@ function moveStuff() {
 
 }
 
+// classes
 function Star(x, y, size) {
 	this.x = x;
 	this.y = y;
@@ -273,10 +269,9 @@ function Ship(x, y) {
 		ctx.restore();
 	}
 }
+
+// functions
 function startTick() {
-	// addEventListener("keyup", function (e) {
-	// 	keyState[e.code] = false;
-	// }, true)
 	if (startGame == false) {
 		startGame = true;
 		asteroidTick = setInterval(drawAsteroid, 500)
@@ -293,10 +288,8 @@ function startTick() {
 				asteroidSpeed += 1;
 			}
 		}, 1000)
-	} else if (startGame == true) {
-		console.log("Already started");
 	} else {
-		console.log("test");
+		alert("Game already started!");
 	}
 }
 
@@ -315,7 +308,6 @@ function asteroid(x, y) {
 
 	this.draw = function () {
 		randX = Math.floor(Math.random() * 1000) + 5;
-
 		ctx.fillStyle = "gray";
 		ctx.save();
 		ctx.translate(this.x, this.y);
@@ -350,7 +342,6 @@ function resetGame() {
 	keyState = {};
 	startGame = false;
 	spaceShip = new Ship(500, 700);
-	// clearTimeout(moveLoop);
 
 
 	for (i = 0; i <= 100; i++) {
