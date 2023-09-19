@@ -1,6 +1,6 @@
 canvas = document.getElementById("myCanvas");
 ctx = canvas.getContext("2d");
-const height = 800;
+const height = 750;
 const width = 1000;
 let laserLimit = 3;
 let currentLasers = 0;
@@ -10,8 +10,9 @@ let randX = Math.floor(Math.random() * 1000) + 5;
 let asteroidSpeed = 3;
 let survivalTime = 0;
 let survivalTimer;
-let startGame = false;
+var startGame = false;
 let asteroidSpawn = false;
+var moveLoop;
 var keyState = {};
 
 let starArr = new Array();
@@ -41,7 +42,46 @@ function setUp() {
 		keyState[e.keyCode] = false;
 	}, true)
 
-	function moveLoop() {
+
+	moveLoop();
+	addEventListener("keyup", function (e) {
+		if (startGame == true) {
+			if (e.keyCode == 32) { // laser
+				if (currentLasers < laserLimit) {
+					let laser = new Blaster(spaceShip.x, spaceShip.y);
+					currentLasers++;
+					blasterArr.push(laser);
+				}
+				ctx.clearRect(0, 0, width, height);
+				spaceShip.draw();
+				ctx.font = ("40px Georgia");
+				ctx.fillStyle = ("yellow");
+				ctx.fillText("High Score: " + highScore, 10, 40);
+				ctx.fillText("Current Score: " + currentScore, 10, 80);
+				ctx.fillText("Time Survived: " + survivalTime, 10, 120);
+				//redraw laser
+				for (i = 0; i < blasterArr.length; i++) {
+					blasterArr[i].draw();
+	
+				}
+				//redraw stars
+				for (i = 0; i < starArr.length; i++) {
+					starArr[i].draw();
+				}
+				//redraw asteroids
+				for (let g = 0; g < asteroidArray.length; g++) {
+					asteroidArray[g].y += asteroidSpeed;
+					asteroidArray[g].draw();
+				}
+			}
+		
+		}
+	})
+}
+
+
+function moveLoop() {
+	if (startGame == true) {
 		//left
 		if (keyState[37]) {
 			spaceShip.x -= 3;
@@ -65,42 +105,11 @@ function setUp() {
 			spaceShip.y += 3;
 			if (spaceShip.y > height - 25)
 				spaceShip.y = height - 25;
+			console.log('test');
 		}
-
+	}
 		setTimeout(moveLoop, 10);
 	}
-	moveLoop();
-	addEventListener("keyup", function (event) {
-		if (event.keyCode == 32) { // laser
-			if (currentLasers < laserLimit) {
-				let laser = new Blaster(spaceShip.x, spaceShip.y);
-				currentLasers++;
-				blasterArr.push(laser);
-			}
-			ctx.clearRect(0, 0, width, height);
-			spaceShip.draw();
-			ctx.font = ("40px Georgia");
-			ctx.fillStyle = ("yellow");
-			ctx.fillText("High Score: " + highScore, 10, 40);
-			ctx.fillText("Current Score: " + currentScore, 10, 80);
-			ctx.fillText("Time Survived: " + survivalTime, 10, 120);
-			//redraw laser
-			for (i = 0; i < blasterArr.length; i++) {
-				blasterArr[i].draw();
-
-			}
-			//redraw stars
-			for (i = 0; i < starArr.length; i++) {
-				starArr[i].draw();
-			}
-			//redraw asteroids
-			for (let g = 0; g < asteroidArray.length; g++) {
-				asteroidArray[g].y += asteroidSpeed;
-				asteroidArray[g].draw();
-			}
-		}
-	})
-}
 
 
 function moveStuff() {
@@ -266,6 +275,9 @@ function Ship(x, y) {
 	}
 }
 function startTick() {
+	// addEventListener("keyup", function (e) {
+	// 	keyState[e.code] = false;
+	// }, true)
 	if (startGame == false) {
 		startGame = true;
 		asteroidTick = setInterval(drawAsteroid, 500)
@@ -338,6 +350,8 @@ function resetGame() {
 	starArr = [];
 	startGame = false;
 	spaceShip = new Ship(500, 700);
+	clearTimeout(moveLoop);
+
 
 	for (i = 0; i <= 100; i++) {
 		let star = new Star(Math.floor(Math.random() * width), Math.floor(Math.random() * height), Math.floor(Math.random() * 5));
