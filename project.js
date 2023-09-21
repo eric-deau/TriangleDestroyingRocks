@@ -22,11 +22,6 @@ function setUp() {
 	spaceShip = new Ship(500, 700);
 	spaceShip.draw();
 	setInterval(moveStuff, 10);
-	ctx.font = ("30px Georgia");
-	ctx.fillStyle = ("yellow");
-	ctx.fillText("High Score: " + highScore, 10, 40);
-	ctx.fillText("Current Score: " + currentScore, 10, 80);
-	ctx.fillText("Time Survived: " + survivalTime, 10, 120);
 
 	for (i = 0; i <= 100; i++) {
 		let star = new Star(Math.floor(Math.random() * width), Math.floor(Math.random() * height), Math.floor(Math.random() * 5));
@@ -53,11 +48,7 @@ function setUp() {
 				}
 				ctx.clearRect(0, 0, width, height);
 				spaceShip.draw();
-				ctx.font = ("40px Georgia");
-				ctx.fillStyle = ("yellow");
-				ctx.fillText("High Score: " + highScore, 10, 40);
-				ctx.fillText("Current Score: " + currentScore, 10, 80);
-				ctx.fillText("Time Survived: " + survivalTime, 10, 120);
+
 				//redraw laser
 				for (i = 0; i < blasterArr.length; i++) {
 					blasterArr[i].draw();
@@ -152,11 +143,7 @@ function moveStuff() {
 		}
 	}
 	//redraw score
-	ctx.font = ("40px Georgia");
-	ctx.fillStyle = ("yellow");
-	ctx.fillText("High Score: " + highScore, 10, 40);
-	ctx.fillText("Current Score: " + currentScore, 10, 80);
-	ctx.fillText("Time Survived: " + survivalTime, 10, 120);
+	redrawScore();
 
 	//redraw laser
 	for (i = 0; i < blasterArr.length; i++) {
@@ -293,11 +280,18 @@ function startTick() {
 	}
 }
 
+function redrawScore() {
+	ctx.font = ("40px Courier New");
+	ctx.fillStyle = `rgb(255, 0, 0)`;
+	ctx.fillText("High Score: " + highScore, 10, 40);
+	ctx.fillText("Current Score: " + currentScore, 10, 80);
+	ctx.fillText("Time Survived: " + survivalTime, 10, 120);
+}
+
 function drawAsteroid() {
 	let a = new asteroid(randX, 15);
 	a.draw()
 	asteroidArray.push(a);
-	// console.log(asteroidArray)
 }
 
 function asteroid(x, y) {

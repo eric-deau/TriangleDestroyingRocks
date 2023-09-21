@@ -3,6 +3,16 @@ body{
     color: #fff;
     margin: 0;
     padding: 0;
+    height: 100%;
+    
+    font-family: 'Press Start 2P', cursive;
+    background: repeating-linear-gradient(0deg, #0f0a1e, #0f0a1e 2px, #222 2px, #222 4px);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 canvas {
@@ -11,6 +21,7 @@ canvas {
     margin-right: auto;
     display: block;
     outline: 3px solid #00fc00;
+    outline-offset: -3px;
 }
 
 h1 {
@@ -101,7 +112,28 @@ button {
     transform: translateY(4px);
 }
 
+#header {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 5px;
+    text-shadow: -2px 0 0 #fdff2a,
+    -4px 0 0 #df4a42,
+    2px 0 0 #91fcfe,
+    4px 0 0 #4405fc;
+    animation: blink 1s steps(4, start) infinite;
+}
 
 .container {
+    margin: 20px;
     text-align: center;
+}
+
+@keyframes blink {
+    to {
+        visibility: hidden;
+    }
 }
