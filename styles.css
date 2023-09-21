@@ -16,7 +16,7 @@ html, body {
 }
 
 canvas {
-    /* display: block; */
+    display: block;
     position:absolute;
     background-color: black;
     margin-left: auto;
@@ -33,7 +33,7 @@ h1 {
 button {
     /* margin-left: auto;
     margin-right: auto; */
-    display: inline-block;
+    /* display: inline-block; */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -41,6 +41,7 @@ button {
     text-decoration: none;
     font-size: 16px;
     cursor: pointer;
+    font-family: "Press Start 2P", cursive;
 }
 
 ul {
@@ -120,7 +121,7 @@ ul {
 
 #restart:active {
     background-color: #f44336;
-    transform: translateY(4px);
+    transform: translate(4px, 4px);
 }
 
 #header {
@@ -178,6 +179,28 @@ ul {
     justify-content: center;
 }
 
+.wrapper {
+    margin: 20px;
+    position: relative;
+    min-height: 40vh;
+    /* margin:20px;
+    text-align: center;
+    position:absolute;
+    bottom: 0px; */
+}
+
+.button-container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align:center;
+}
+
+.button {
+    display: inline-block;
+    margin: 0 10px;
+}
 @keyframes blink {
     to {
         visibility: hidden;
