@@ -261,6 +261,8 @@ function Ship(x, y) {
 // functions
 function startTick() {
 	canvas.style.visibility = 'visible';
+	document.getElementById("instructions").style.visibility = 'hidden';
+	document.getElementById("howToPlay").style.visibility = 'hidden';
 	document.getElementById("insertCoin").style.visibility = 'hidden';
 	if (startGame == false) {
 		startGame = true;
