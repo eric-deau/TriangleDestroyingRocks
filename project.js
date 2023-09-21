@@ -1,5 +1,5 @@
-canvas = document.getElementById("myCanvas");
-ctx = canvas.getContext("2d");
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
 const height = 750;
 const width = 1000;
 let laserLimit = 3;
@@ -67,6 +67,7 @@ function setUp() {
 		
 		}
 	})
+	canvas.style.visibility = 'hidden';
 }
 
 // ship movement
@@ -259,6 +260,8 @@ function Ship(x, y) {
 
 // functions
 function startTick() {
+	canvas.style.visibility = 'visible';
+	document.getElementById("insertCoin").style.visibility = 'hidden';
 	if (startGame == false) {
 		startGame = true;
 		asteroidTick = setInterval(drawAsteroid, 500)

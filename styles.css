@@ -124,6 +124,19 @@ button {
     -4px 0 0 #df4a42,
     2px 0 0 #91fcfe,
     4px 0 0 #4405fc;
+    /* animation: blink 1s steps(4, start) infinite; */
+}
+
+#insertCoin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: 5px;
+    text-shadow: -2px 0 0 #fdff2a,
+    -4px 0 0 #df4a42,
+    2px 0 0 #91fcfe,
+    4px 0 0 #4405fc;
     animation: blink 1s steps(4, start) infinite;
 }
 
