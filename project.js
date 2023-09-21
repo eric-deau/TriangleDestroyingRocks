@@ -340,7 +340,6 @@ function resetGame() {
 	startGame = false;
 	spaceShip = new Ship(500, 700);
 
-
 	for (i = 0; i <= 100; i++) {
 		let star = new Star(Math.floor(Math.random() * width), Math.floor(Math.random() * height), Math.floor(Math.random() * 5));
 		starArr.push(star);
