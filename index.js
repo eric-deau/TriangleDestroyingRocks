@@ -202,8 +202,8 @@ function Star(x, y, size) {
 function Blaster(x, y) {
 	this.x = x;
 	this.y = y;
-	this.w = 1;
-	this.h = 10;
+	this.w = 3;
+	this.h = 15;
 
 	this.draw = function () {
 		ctx.fillStyle = "green";
