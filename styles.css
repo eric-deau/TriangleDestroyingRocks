@@ -51,7 +51,6 @@ ul {
 
 
 #start {
-    background-color: #4CAF50;
     transition: all 0.3s;
     position: relative;
     opacity: 1;
@@ -75,7 +74,6 @@ ul {
 #start::after {
     content: "";
     position: absolute;
-    background-color: #4CAF50;
     z-index: 1;
     transition: all(0.3s);
 }
@@ -87,6 +85,7 @@ ul {
 
 #start:hover {
     background-color: #00fc00;
+    box-shadow: 0 0 10px #00fc00;
 }
 
 #start:active {
@@ -95,7 +94,6 @@ ul {
 }
 
 #restart {
-    background-color: #4CAF50;
     transition: all 0.3s;
     position: relative;
     opacity: 1;
@@ -190,6 +188,7 @@ ul {
 }
 
 .button {
+    background-color: #4CAF50;
     display: inline-block;
     margin: 0 10px;
 }
