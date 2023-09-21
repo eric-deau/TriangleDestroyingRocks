@@ -31,9 +31,6 @@ h1 {
 }
 
 button {
-    /* margin-left: auto;
-    margin-right: auto; */
-    /* display: inline-block; */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -136,7 +133,6 @@ ul {
     -4px 0 0 #df4a42,
     2px 0 0 #91fcfe,
     4px 0 0 #4405fc;
-    /* animation: blink 1s steps(4, start) infinite; */
 }
 
 #insertCoin {
@@ -183,10 +179,6 @@ ul {
     margin: 20px;
     position: relative;
     min-height: 40vh;
-    /* margin:20px;
-    text-align: center;
-    position:absolute;
-    bottom: 0px; */
 }
 
 .button-container {
