@@ -353,8 +353,9 @@ async function lose() {
         return;
     }
 
+		console.log(`${CONFIG.API_BASE_URL}/players`);
     try {
-        const response = await fetch("http://localhost:3141/galaga/players", {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/players`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
