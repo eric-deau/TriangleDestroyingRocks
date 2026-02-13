@@ -130,7 +130,8 @@ function moveStuff() {
 	}
 
 	//ship collision detection
-	for (let i = 0; i < asteroidArray.length; i++) {
+	if (startGame) {
+		for (let i = 0; i < asteroidArray.length; i++) {
 		const asteroid = asteroidArray[i];
 
 		if (
@@ -143,6 +144,8 @@ function moveStuff() {
 			break;
 		}
 	}
+	}
+	
 	//redraw score
 	redrawScore();
 
@@ -166,7 +169,7 @@ function moveStuff() {
 			starArr[i].y = height + 5;
 		}
 	}
-	//Remove asteroid from array if leave canvas
+	//remove asteroid from array if leave canvas
 	for (let i = 0; i < asteroidArray.length; i++) {
 		asteroidArray[i].draw()
 		if (asteroidArray[i].y >= 800) {
@@ -174,7 +177,7 @@ function moveStuff() {
 		}
 	}
 
-	//Redraw asteroids	
+	//redraw asteroids	
 	for (let g = 0; g < asteroidArray.length; g++) {
 		asteroidArray[g].y += asteroidSpeed;
 		asteroidArray[g].draw();
@@ -258,7 +261,6 @@ function Ship(x, y) {
 	}
 }
 
-// functions
 function startTick() {
 	canvas.style.visibility = 'visible';
 	document.getElementById("instructions").style.visibility = 'hidden';
@@ -318,14 +320,78 @@ function asteroid(x, y) {
 	}
 }
 
-function lose() {
-	if (currentScore > highScore) {
-		highScore = currentScore;
-	}
-	alert("You lost! Your score was: " + currentScore);
-	resetGame();
+async function lose() {
+
+	startGame = false;
+
+    clearInterval(asteroidTick);
+    clearInterval(survivalTimer);
+	clearInterval(moveStuff);
+	
+    if (currentScore > highScore) {
+        highScore = currentScore;
+    }
+	
+	document.getElementById("finalScoreText").innerText =
+        "Your score was: " + currentScore;
+
+	document.getElementById("gameOverModal").classList.remove("hidden");
+
+	document.getElementById("cancelBtn").addEventListener("click", () => {
+		closeModal();
+		resetGame();
+	});
+
+	document.getElementById("submitScoreBtn").addEventListener("click", async () => {
+
+    const username = document.getElementById("usernameInput").value.trim();
+    const email = document.getElementById("emailInput").value.trim();
+    const message = document.getElementById("modalMessage");
+
+    if (!username || !email) {
+        message.innerText = "Username and email required.";
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:3141/galaga/players", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                email,
+                score: currentScore
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            message.innerText = data.error;
+        } else {
+            message.innerText = "Score saved!";
+            setTimeout(() => {
+                closeModal();
+                resetGame();
+            }, 1000);
+        }
+
+    } catch (err) {
+        console.error(err);
+        message.innerText = "Server connection failed.";
+    }
+});
+    resetGame();
 }
 
+function closeModal() {
+    document.getElementById("gameOverModal").classList.add("hidden");
+    document.getElementById("usernameInput").value = "";
+    document.getElementById("emailInput").value = "";
+    document.getElementById("modalMessage").innerText = "";
+}
 
 function resetGame() {
 	ctx.clearRect(0, 0, 400, 400);
@@ -339,7 +405,6 @@ function resetGame() {
 	blasterArr = [];
 	starArr = [];
 	keyState = {};
-	startGame = false;
 	spaceShip = new Ship(500, 700);
 
 	for (i = 0; i <= 100; i++) {
