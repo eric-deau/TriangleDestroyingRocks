@@ -337,6 +337,8 @@ async function lose() {
 
 	document.getElementById("gameOverModal").classList.remove("hidden");
 
+	loadLeaderboard(); 
+
 	document.getElementById("cancelBtn").addEventListener("click", () => {
 		closeModal();
 		resetGame();
@@ -383,9 +385,30 @@ async function lose() {
         console.error(err);
         message.innerText = "Server connection failed.";
     }
-});
+	});
+	await loadLeaderboard(); 
     resetGame();
 }
+
+async function loadLeaderboard() {
+    try {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/leaderboard`);
+        const data = await response.json();
+
+        const list = document.getElementById("leaderboardList");
+        list.innerHTML = "";
+
+        data.forEach((player, index) => {
+            const li = document.createElement("li");
+            li.textContent = `${index + 1}. ${player.username} - ${player.score}`;
+            list.appendChild(li);
+        });
+
+    } catch (err) {
+        console.error("Leaderboard error:", err);
+    }
+}
+
 
 function closeModal() {
     document.getElementById("gameOverModal").classList.add("hidden");
