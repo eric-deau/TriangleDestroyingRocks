@@ -346,48 +346,54 @@ async function lose() {
 
 	document.getElementById("submitScoreBtn").addEventListener("click", async () => {
 
-    const username = document.getElementById("usernameInput").value.trim();
-    const email = document.getElementById("emailInput").value.trim();
-    const message = document.getElementById("modalMessage");
+		const username = document.getElementById("usernameInput").value.trim();
+		const password = document.getElementById("passwordInput").value.trim();
+		const message = document.getElementById("modalMessage");
 
-    if (!username || !email) {
-        message.innerText = "Username and email required.";
-        return;
-    }
+		if (!username || !password) {
+			message.innerText = "Username and password required.";
+			return;
+		}
+			
+		try {
+			console.log(currentScore);
+			const response = await fetch(`${CONFIG.API_BASE_URL}/players`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					username,
+					password,
+					score: currentScore
+				})
+			});
+			console.log(response);
+			const data = await response.json();
 
-		console.log(`${CONFIG.API_BASE_URL}/players`);
-    try {
-        const response = await fetch(`${CONFIG.API_BASE_URL}/players`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username,
-                email,
-                score: currentScore
-            })
-        });
+			if (!response.ok) {
+				message.innerText = data.error;
+				if (response.status === 412) {
+					setTimeout(() => {
+					closeModal();
+					resetGame();
+				}, 1000);
+				}
+			} else {
+				message.innerText = "Score saved!";
+				setTimeout(() => {
+					closeModal();
+					resetGame();
+				}, 1000);
+			}
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            message.innerText = data.error;
-        } else {
-            message.innerText = "Score saved!";
-            setTimeout(() => {
-                closeModal();
-                resetGame();
-            }, 1000);
-        }
-
-    } catch (err) {
-        console.error(err);
-        message.innerText = "Server connection failed.";
-    }
+		} catch (err) {
+			console.error(err);
+			message.innerText = "Server connection failed.";
+		}
 	});
 	await loadLeaderboard(); 
-    resetGame();
+    // resetGame();
 }
 
 async function loadLeaderboard() {
@@ -413,7 +419,7 @@ async function loadLeaderboard() {
 function closeModal() {
     document.getElementById("gameOverModal").classList.add("hidden");
     document.getElementById("usernameInput").value = "";
-    document.getElementById("emailInput").value = "";
+    document.getElementById("passwordInput").value = "";
     document.getElementById("modalMessage").innerText = "";
 }
 
