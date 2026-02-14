@@ -19,6 +19,13 @@ let blasterArr = new Array();
 asteroidArray = new Array()
 
 function setUp() {
+	const submitBtn = document.getElementById("submitScoreBtn");
+	submitBtn.addEventListener("click", handleSubmitScore);
+	document.getElementById("cancelBtn").addEventListener("click", () => {
+		closeModal();
+		resetGame();
+	});
+	
 	spaceShip = new Ship(500, 700);
 	spaceShip.draw();
 	setInterval(moveStuff, 10);
@@ -339,61 +346,56 @@ async function lose() {
 
 	loadLeaderboard(); 
 
-	document.getElementById("cancelBtn").addEventListener("click", () => {
-		closeModal();
-		resetGame();
-	});
-
-	document.getElementById("submitScoreBtn").addEventListener("click", async () => {
-
-		const username = document.getElementById("usernameInput").value.trim();
-		const password = document.getElementById("passwordInput").value.trim();
-		const message = document.getElementById("modalMessage");
-
-		if (!username || !password) {
-			message.innerText = "Username and password required.";
-			return;
-		}
-			
-		try {
-			console.log(currentScore);
-			const response = await fetch(`${CONFIG.API_BASE_URL}/players`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify({
-					username,
-					password,
-					score: currentScore
-				})
-			});
-			console.log(response);
-			const data = await response.json();
-
-			if (!response.ok) {
-				message.innerText = data.error;
-				if (response.status === 412) {
-					setTimeout(() => {
-					closeModal();
-					resetGame();
-				}, 1000);
-				}
-			} else {
-				message.innerText = "Score saved!";
-				setTimeout(() => {
-					closeModal();
-					resetGame();
-				}, 1000);
-			}
-
-		} catch (err) {
-			console.error(err);
-			message.innerText = "Server connection failed.";
-		}
-	});
 	await loadLeaderboard(); 
     // resetGame();
+}
+
+async function handleSubmitScore() {
+
+	const username = document.getElementById("usernameInput").value.trim();
+	const password = document.getElementById("passwordInput").value.trim();
+	const message = document.getElementById("modalMessage");
+
+	if (!username || !password) {
+		message.innerText = "Username and password required.";
+		return;
+	}
+		
+	try {
+		const response = await fetch(`${CONFIG.API_BASE_URL}/players`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				username,
+				password,
+				score: currentScore
+			})
+		});
+		console.log(response);
+		const data = await response.json();
+
+		if (!response.ok) {
+			message.innerText = data.error;
+			if (response.status === 412) {
+				setTimeout(() => {
+				closeModal();
+				resetGame();
+			}, 1000);
+			}
+		} else {
+			message.innerText = "Score saved!";
+			setTimeout(() => {
+				closeModal();
+				resetGame();
+			}, 1000);
+		}
+
+	} catch (err) {
+		console.error(err);
+		message.innerText = "Server connection failed.";
+	}
 }
 
 async function loadLeaderboard() {
