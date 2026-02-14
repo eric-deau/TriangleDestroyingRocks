@@ -221,7 +221,7 @@ ul {
 
 .modal-content input {
     width: 100%;
-    padding: 8px;
+    padding: 8px 0;
     margin: 8px 0;
 }
 
@@ -233,6 +233,19 @@ ul {
 .modal-buttons button {
     padding: 8px 12px;
     cursor: pointer;
+    background-color: #4CAF50;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+#leaderboardList {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+}
+
+#leaderboardList li {
+    margin: 8px 0;
 }
 
 @keyframes blink {
