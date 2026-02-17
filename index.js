@@ -347,7 +347,6 @@ async function lose() {
 	loadLeaderboard(); 
 
 	await loadLeaderboard(); 
-    // resetGame();
 }
 
 async function handleSubmitScore() {

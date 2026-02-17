@@ -231,11 +231,29 @@ ul {
 }
 
 .modal-buttons button {
-    padding: 8px 12px;
+    padding: 12px 12px;
     cursor: pointer;
     background-color: #4CAF50;
     display: inline-block;
     margin: 0 10px;
+    transition: all 0.3s;
+}
+
+.modal-buttons button:hover {
+    background-color: #00fc00;
+    box-shadow: 0 0 10px #00fc00;
+    transform: scale(1.1, 1.1);
+    transform: translate(2px, 2px);
+
+}
+
+#cancelBtn {
+    background-color: #f44336;
+    color: white;
+}
+
+#cancelBtn:hover {
+    box-shadow: 0 0 10px #f44336;
 }
 
 #leaderboardList {
