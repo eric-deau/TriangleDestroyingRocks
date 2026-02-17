@@ -219,12 +219,6 @@ ul {
     color: white;
 }
 
-.modal-content input {
-    width: 100%;
-    padding: 8px 0;
-    margin: 8px 0;
-}
-
 .modal-buttons {
     display: flex;
     justify-content: space-between;
@@ -260,10 +254,42 @@ ul {
     width: 100%;
     padding: 0;
     text-align: center;
+    margin: 12px;
 }
 
 #leaderboardList li {
     margin: 8px 0;
+}
+
+.group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.score-input-form {
+    position: relative;
+    margin-bottom: 45px;
+}
+
+.score-input-form input {
+    font-family: 'Press Start 2P', cursive;
+    background: rgba(0, 0, 0, 0.5);
+    color:white;
+    font-size: 16px;
+    padding: 10px 10px 10px 10px;
+    display: block;
+    width: 95%;
+    border: none;
+    border-bottom: 1px solid white;
+    margin-bottom: 12px;
+}
+
+.score-input-form input::placeholder {
+    color: white;
+}
+
+.score-input-form input:hover::placeholder {
+    color:transparent;
 }
 
 @keyframes blink {
